@@ -8,10 +8,10 @@ angular.module("MusicManagement").factory("AuthService", [
 
     var authService = {
       currentUser: {
-        accessToken: localStorage.getItem("currentUser")
+        accessToken: localStorage.getItem("currentUser").accessToken
           ? JSON.parse(localStorage.getItem("currentUser")).accessToken
           : null,
-        refreshToken: localStorage.getItem("currentUser")
+        refreshToken: localStorage.getItem("currentUser").refreshToken
           ? JSON.parse(localStorage.getItem("currentUser")).refreshToken
           : null,
       },
