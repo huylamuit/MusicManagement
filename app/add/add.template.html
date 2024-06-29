@@ -1,0 +1,93 @@
+
+
+<form class="well row add" name="form" ng-controller="addController" novalidate>
+  <div class="span7">
+    <div class="row">
+      <label for="songName"><h3>{{'SONG_NAME' | translate}}</h3></label>
+      <input
+        required
+        type="text"
+        name="songName"
+        ng-model="formData.songName"
+        class="span3"
+        placeholder="{{'PLACEHOLDER.SONG_NAME' | translate}}"
+      />
+      <div ng-show="form.$submitted || form.songName.$touched">
+        <i ng-show="form.songName.$error.required">Name is required.</i>
+      </div>
+    </div>
+    <div class="row">
+      <label for="genreId"><h3>{{'SONG_GENRE' | translate}}</h3></label>
+      <select name="genreId" ng-model="formData.genreId">
+        <option value="" disabled selected>{{'PLACEHOLDER.SONG_GENRE' | translate}}</option>
+        <option ng-repeat="item in genre" ng-value="item.genreId">{{item.genreName}}</option>
+      </select>
+
+      <i class="icon-plus" ng-click="toggleSelectingGenre()"></i>
+
+      <div ng-show="!isSelectingGenre">
+        <input
+          required
+          type="text"
+          name="newGenre"
+          ng-model="newGenre"
+          class="span3"
+          placeholder="Input new genre"
+        />
+        <i class="icon-ok" ng-click="addNewGenre()"></i>
+        <i class="icon-remove" ng-click="toggleSelectingGenre()"></i>
+      </div>
+    </div>
+    <div class="row" ng-if="currentRoute == 'add'">
+      <label for="src"><h3>{{'AUDIO_FILE' | translate}}</h3></label>
+      <input
+        required
+        type="file"
+        ngf-select
+        ng-model="formData.src"
+        name="src"
+        ngf-pattern="'audio/*'"
+        ngf-accept="'audio/*'"
+      />
+      <i ng-show="form.$submitted && form.src.$error.required">Please choose a song file.</i>
+      <div>
+        <audio controls ngf-src="formData.src"></audio>
+      </div>
+    </div>
+  </div>
+
+  <div class="span4" ng-if="currentRoute == 'add'">
+    <label for="image"><h3>{{'THUMBNAIL' | translate}}</h3></label>
+    <input
+      type="file"
+      ngf-select
+      ng-model="formData.image"
+      name="image"
+      ngf-pattern="'image/*'"
+      ngf-accept="'image/*'"
+      ngf-max-size="20MB"
+      ngf-min-height="100"
+      ngf-resize="{width: 320, height: 240}"
+    />
+    <i ng-show="form.$submitted && form.image.$error.required">Please choose a thumbnail image.</i>
+    <i ng-show="form.image.$error.maxSize">File must be less than 20MB.</i>
+    <i ng-show="form.image.$error.minHeight">Image height must be at least 100px.</i>
+    <div>
+      <img class="thumbnail" ngf-thumbnail="formData.image || 'assets/no-image.jpg'" />
+    </div>
+  </div>
+
+  <div class="span12 footer">
+    <div us-spinner="{radius:10, width:8, length: 16, color:white}" spinner-key="spinner-3"></div>
+    <button ng-show="!isLoading"
+      type="submit"
+      ng-click="submit()"
+      class="btn btn-large btn-success offset10"
+    >
+      {{'ADD' | translate}}
+    </button>
+  </div>
+</form>
+
+</body>
+</html>

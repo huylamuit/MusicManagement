@@ -1,0 +1,9 @@
+<div *ngIf="display">
+  <div id="overlay">
+    <div id="text">
+      <i class="fa fa-exclamation-triangle fa-3x" *ngIf="error" aria-hidden="true"></i>
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw" *ngIf="!error"></i>
+      <span class="sr-only">Loading</span>
+    </div>
+  </div>
+</div>

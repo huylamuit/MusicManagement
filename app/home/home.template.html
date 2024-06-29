@@ -1,0 +1,84 @@
+<div class="home" ng-controller="homeController">
+  <action-bar></action-bar>
+  <table class="table center-rows">
+    <thead>
+      <tr>
+        <th>
+          <input type="checkbox" value="" ng-click="$ctrl.toggleSelectAll()" />
+        </th>
+        <th>{{'SONG_NAME' | translate}}</th>
+        <th>{{'SONG_GENRE' | translate}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <div us-spinner="{radius:10, width:8, length: 16}" spinner-key="spinner-2"></div>
+      <tr ng-repeat="song in $ctrl.songs">
+        <td>
+          <input
+            type="checkbox"
+            ng-checked="song.selected"
+            value=""
+            ng-click="$ctrl.selectSong(song.songId)"
+          />
+        </td>
+        <td>{{song.songName}}</td>
+        <td>{{song.genre.genreName}}</td>
+        <td>
+          <a ng-href="#!/play/{{song.songId}}">
+            <i class="icon-play"></i>
+          </a>
+
+          <a ng-href="#!/edit/{{song.songId}}">
+            <i class="icon-pencil"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <hr />
+  <div class="row-fluid info-bar">
+    <div class="span4">
+      <div><b>Total items:</b> {{$ctrl.songs.length}}</div>
+      <b>Selected items:</b> {{$ctrl.selectedSongs.length}}
+    </div>
+  
+    <div class="span4 pagination center">
+      <ul>
+        <li><a href="#">Prev</a></li>
+        <li class="active">
+          <a href="#">1</a>
+        </li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">Next</a></li>
+      </ul>
+    </div>
+    <div class="span4 center">
+      <b>Page size:</b>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown">
+          {{$ctrl.size}}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li ng-click="$ctrl.changeSize(5)">5</li>
+          <li ng-click="$ctrl.changeSize(10)">10</li>
+          <li ng-click="$ctrl.changeSize(15)">15</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+
+  <modal
+    header="{{'DELETE' | translate}}"
+    action="{{'DELETE' | translate}}"
+    button-type="danger"
+    callback="$ctrl.deleteSongs()"
+    ><h3>
+      Bạn có chắc muốn xóa {{$ctrl.selectedSongs.length}} bài hát?
+    </h3></modal
+  >
+</div>

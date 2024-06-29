@@ -1,0 +1,32 @@
+<div class="row login center" ng-controller="loginController">
+  
+  <div>
+    <h1 class="title">LOGIN</h1>
+  </div>
+  <form name="form" class="center d-columns" ng-submit="$ctrl.login()">
+    <div class="row">
+      <label for="username"><h4>Username</h4></label>
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        ng-model="$ctrl.username"
+        required
+      />
+    </div>
+    <div class="row">
+      <label for="Password"><h4>Password</h4></label>
+      <input
+        type="password"
+        name="Password"
+        placeholder="Password"
+        ng-model="$ctrl.password"
+        required
+      />
+    </div>
+    <div class="center">
+      <div us-spinner="{radius:10, width:8, length: 16}" spinner-key="spinner-1"></div>
+      <button ng-show="!$ctrl.isLoading" type="submit" class="btn-large btn-login">Login</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<div class="row-fluid info-bar">
+  <div class="span4">
+    <div><b>Total items:</b> {{$ctrl.totalSongs.length}}</div>
+    <b>Selected items:</b> {{$ctrl.selectedSongs.length}}
+  </div>
+
+  <div class="span4 pagination center">
+    <ul>
+      <li><a href="#">Prev</a></li>
+      <li class="active">
+        <a href="#">1</a>
+      </li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">Next</a></li>
+    </ul>
+  </div>
+  <div class="span4 center">
+    <b>Page size:</b>
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown">
+        {{$ctrl.selectedSize}}
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li ng-click="onChangeSize(5)">5</li>
+        <li ng-click="onChangeSize(10)">10</li>
+        <li ng-click="onChangeSize(15)">15</li>
+      </ul>
+    </div>
+  </div>
+</div>
