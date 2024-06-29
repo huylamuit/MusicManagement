@@ -10,14 +10,16 @@ angular.module("home").controller("homeController", [
   "$q",
   "usSpinnerService",
   "$routeParams",
-  function homeController(HomeServices, $q, usSpinnerService, $routeParams) {
+  "AuthService",
+  function homeController(HomeServices, $q, usSpinnerService, $routeParams, AuthService) {
     this.songs = [];
     this.selectedSongs = [];
     this.selectAllChecked = false;
     this.page = parseInt($routeParams.page, 10) - 1 || 0; // Make sure page is 0-based
     this.size = 5;
     this.total_pages = 1;
-
+    this.isAuthenticated = AuthService.isAuthenticated()
+    console.log(this.isAuthenticated)
     // Generate an array of page numbers based on totalPages
     this.getPageNumbers = function () {
       var pages = [];
