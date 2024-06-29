@@ -4,12 +4,15 @@
     "angular-local-storage": "^0.7.1",
     "angular-route": "^1.8.2",
     "angular-spinner": "^1.0.1",
+    "gulp": "^5.0.0",
     "http-server": "^14.1.1",
     "jquery": "^1.11.1",
     "ng-file-upload": "^12.2.13",
     "ng-spinner": "^9.0.0"
   },
   "scripts": {
-    "start": "http-server ./app -a localhost -p 8080 -c-1"
+    "start": "http-server ./app -a localhost -p 8080 -c-1",
+    "build":"gulp build"
+   
   }
 }

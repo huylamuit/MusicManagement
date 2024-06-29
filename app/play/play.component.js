@@ -107,7 +107,7 @@ angular.module("play").controller("playController", [
       usSpinnerService.spin("spinner-4");
       PlayServices.getSongById(id)
         .then(function (data) {
-          console.log("Song data:", data);
+
           $scope.song.img = data.data.image;
           $scope.song.songName = data.data.songName;
           $scope.song.songGenre = data.data.genre.genreName;
@@ -115,13 +115,13 @@ angular.module("play").controller("playController", [
 
           audio = new Audio($scope.song.src);
           audio.addEventListener("loadedmetadata", function () {
-            console.log("Audio metadata loaded.");
+
             $scope.song.length = audio.duration;
             audio.volume = $scope.volume / 100;
           });
         })
         .catch(function (error) {
-          console.log("Error loading song:", error);
+
           alert("Có lỗi xảy ra");
         })
         .finally(function () {

@@ -21,8 +21,8 @@ angular
         vm.isLoading = true;
         AuthService.login(vm.username, vm.password)
           .then(function (response) {
-            $location.path("/home");
-            console.log("Logged in successfully");
+            $location.path("/home/1");
+
             usSpinnerService.stop("spinner-1");
             vm.isLoading = false;
           })

@@ -72,7 +72,6 @@ angular.module("MusicManagement").factory("AuthService", [
       localStorage.setItem("currentUser", null);
       authService.currentUser.accessToken = null;
       authService.currentUser.refreshToken = null;
-      console.log("logout");
       return;
     }
   },

@@ -43,7 +43,7 @@ gulp.task("html-css", function () {
 gulp.task("html", function () {
   return gulp
     .src("app/index.html")
-    .pipe(gulp.dest("dist/html")); // Thư mục đích cho file HTML đã build
+    .pipe(gulp.dest("dist/")); // Thư mục đích cho file HTML đã build
 });
 
 // Task mặc định sẽ chạy cả hai task scripts và html-css

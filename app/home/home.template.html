@@ -42,19 +42,20 @@
       <div><b>Total items:</b> {{$ctrl.songs.length}}</div>
       <b>Selected items:</b> {{$ctrl.selectedSongs.length}}
     </div>
-  
-    <div class="span4 pagination center">
+    <div class="span4 pagination center" >
       <ul>
-        <li><a href="#">Prev</a></li>
-        <li class="active">
-          <a href="#">1</a>
+        <li ng-class="{ disabled: ctrl.page === 0 }">
+          <a ng-click="$ctrl.goToPreviousPage()">Prev</a>
         </li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">Next</a></li>
+        <li ng-repeat="page in $ctrl.getPageNumbers()" ng-class="{ active: $ctrl.page === page - 1 }">
+          <a  ng-click="$ctrl.goToPage(page)">{{ page }}</a>
+        </li>
+        <li ng-class="{ disabled: $ctrl.page === $ctrl.total_pages - 1 }">
+          <a  ng-click="$ctrl.goToNextPage()">Next</a>
+        </li>
       </ul>
     </div>
+    
     <div class="span4 center">
       <b>Page size:</b>
       <div class="btn-group">

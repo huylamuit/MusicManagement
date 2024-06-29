@@ -8,26 +8,26 @@ angular.module("home").factory("HomeServices", [
       deleteSongs: deleteSongs,
     };
     function getSongs(page, size, genreId = null, name = null) {
-      console.log("size: ", size);
-      return $http
-        .get(
-          `${url}/v1/songs`,
-          {
-            page: page,
-            size: size,
-            genreId: genreId,
-            name: name,
-          },
-          {
-            "Cache-Control": "no-cache",
-          }
-        )
-        .then(function (data, status) {
-          const res = data;
-          if (res.status == 200) {
-            return res.data;
-          } else return;
-        });
+
+      return $http({
+        method: 'GET',
+        url: `${url}/v1/songs`,
+        params: {
+          page: page,
+          size: size,
+          genreId: genreId,
+          name: name
+        },
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      }).then(function (response) {
+        if (response.status === 200) {
+          return response.data;
+        } else {
+          return;
+        }
+      });
     }
 
     function deleteSongs(id) {
