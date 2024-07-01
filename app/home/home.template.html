@@ -27,11 +27,11 @@
           <td>{{song.songName}}</td>
           <td>{{song.genre.genreName}}</td>
           <td>
-            <a ng-href="#!/play/{{song.songId}}">
+            <a ng-if="$ctrl.isAuthenticated" ng-href="#!/play/{{song.songId}}">
               <i class="icon-play"></i>
             </a>
   
-            <a ng-if="isAuthenticated" ng-href="#!/edit/{{song.songId}}">
+            <a ng-if="$ctrl.isAuthenticated" ng-href="#!/edit/{{song.songId}}">
               <i class="icon-pencil"></i>
             </a>
           </td>
