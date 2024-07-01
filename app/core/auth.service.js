@@ -3,26 +3,44 @@ angular.module("MusicManagement").factory("AuthService", [
   "$http",
   "$window",
   "environment",
-  function ($http, environment, $window) {
+  function ($http, $window, environment) {
     const url = "https://music-manager-bk1r.onrender.com/api";
+
+    // Helper function to parse stored user data
+    function getStoredUser() {
+      const storedUser = localStorage.getItem("currentUser");
+      if (storedUser) {
+        try {
+          return JSON.parse(storedUser);
+        } catch (e) {
+          console.error("Failed to parse stored user data", e);
+        }
+      }
+      return null;
+    }
+
+    var storedUser = getStoredUser();
 
     var authService = {
       currentUser: {
-        accessToken: localStorage.getItem("currentUser").accessToken
-          ? JSON.parse(localStorage.getItem("currentUser")).accessToken
-          : null,
-        refreshToken: localStorage.getItem("currentUser").refreshToken
-          ? JSON.parse(localStorage.getItem("currentUser")).refreshToken
-          : null,
+        accessToken: storedUser ? storedUser.accessToken : null,
+        refreshToken: storedUser ? storedUser.refreshToken : null,
       },
       login: login,
       logout: logout,
       updateCurrentUser: function (accessToken, refreshToken) {
         this.currentUser.accessToken = accessToken;
         this.currentUser.refreshToken = refreshToken;
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          })
+        );
       },
       isAuthenticated: function () {
-        return this.currentUser.accessToken ? true : false;
+        return !!this.currentUser.accessToken;
       },
     };
     return authService;
@@ -32,10 +50,9 @@ angular.module("MusicManagement").factory("AuthService", [
         headers: {
           "Content-Type": "application/json",
           accept: "*/*",
-          "Cache-Control": "no-cache, no-store, must-revalidate", // Adding cache control headers
-          Pragma: "no-cache", // HTTP 1.0 compatibility
-          Expires: "0", // Proxies
-          // Add any additional headers if needed (e.g., authorization headers)
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
         },
       };
       return $http
@@ -60,8 +77,7 @@ angular.module("MusicManagement").factory("AuthService", [
               })
             );
 
-            authService.currentUser.accessToken = res.data.accessToken;
-            authService.currentUser.refreshToken = res.data.refreshToken;
+            authService.updateCurrentUser(res.data.accessToken, res.data.refreshToken);
           }
           return;
         });
@@ -69,7 +85,7 @@ angular.module("MusicManagement").factory("AuthService", [
 
     function logout() {
       $http.defaults.headers.common.Authorization = null;
-      localStorage.setItem("currentUser", null);
+      localStorage.removeItem("currentUser");
       authService.currentUser.accessToken = null;
       authService.currentUser.refreshToken = null;
       return;
@@ -93,7 +109,6 @@ angular.module("MusicManagement").factory("AuthInterceptor", [
         return config;
       },
       responseError: function (response) {
-        // Xử lý lỗi 401 (Unauthorized) nếu cần thiết
         if (response.status === 401) {
           // Redirect or handle unauthorized requests
         }
